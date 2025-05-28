@@ -1,0 +1,2272 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Digital - Restaurante</title>
+
+    <!-- Tailwind CSS CDN optimizado -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Meta tags para optimización -->
+    <meta name="description" content="Menú digital del restaurante">
+    <meta name="theme-color" content="#1f2937">
+
+    <!-- Preload de fuentes críticas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <style>
+        /* CSS crítico inline para carga rápida */
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        /* Animaciones suaves y optimizadas */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scroll suave */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Optimización de imágenes placeholder */
+        .img-placeholder {
+            background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+            background-size: 20px 20px;
+        }
+
+        /* Vista especial para el vendedor */
+        .vendor-view {
+            font-size: 1.1em;
+        }
+
+        .vendor-view h3 {
+            font-size: 1.5em !important;
+            color: #dc2626 !important;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .vendor-view #cartItems {
+            max-height: none !important;
+        }
+
+        .vendor-view #cartItems h4 {
+            font-size: 1.2em !important;
+            color: #111827 !important;
+        }
+
+        .vendor-view #cartItems p {
+            font-size: 1.3em !important;
+            font-weight: bold !important;
+        }
+
+        .vendor-view #cartTotal {
+            font-size: 2em !important;
+        }
+
+        /* Mejoras específicas para móviles */
+        @media (max-width: 480px) {
+            .menu-item {
+                padding: 10px !important;
+            }
+
+            .menu-item h3 {
+                font-size: 13px !important;
+                line-height: 1.3;
+            }
+
+            .menu-item p {
+                font-size: 11px !important;
+                line-height: 1.4;
+                margin-top: 2px !important;
+            }
+
+            .add-to-cart {
+                padding: 4px 8px !important;
+                font-size: 10px !important;
+                white-space: nowrap;
+                min-width: auto !important;
+                flex-shrink: 0;
+            }
+
+            .category-btn {
+                font-size: 11px !important;
+                padding: 6px 10px !important;
+                white-space: nowrap;
+            }
+
+            header h1 {
+                font-size: 16px !important;
+            }
+
+            /* Carrito responsive */
+            #cartContent {
+                margin: 0 4px !important;
+                border-radius: 12px 12px 0 0;
+                max-height: 85vh !important;
+            }
+
+            #cartItems {
+                max-height: 50vh !important;
+            }
+
+            .vendor-view #cartContent {
+                max-height: 90vh !important;
+            }
+
+            /* Ajuste específico del layout de items */
+            .menu-item .flex {
+                gap: 8px !important;
+            }
+
+            .menu-item .w-14 {
+                width: 48px !important;
+                height: 48px !important;
+            }
+
+            .menu-item .text-xl {
+                font-size: 16px !important;
+            }
+
+            .menu-item .text-base {
+                font-size: 13px !important;
+            }
+        }
+
+        /* Para pantallas extra pequeñas */
+        @media (max-width: 360px) {
+            .menu-item {
+                padding: 8px !important;
+            }
+
+            .menu-item h3 {
+                font-size: 12px !important;
+            }
+
+            .menu-item p {
+                font-size: 10px !important;
+            }
+
+            .add-to-cart {
+                padding: 3px 6px !important;
+                font-size: 9px !important;
+            }
+
+            header h1 {
+                font-size: 14px !important;
+            }
+
+            .menu-item .w-14 {
+                width: 40px !important;
+                height: 40px !important;
+            }
+
+            .menu-item .text-xl {
+                font-size: 14px !important;
+            }
+
+            .menu-item .text-base {
+                font-size: 12px !important;
+            }
+
+            /* Layout más compacto */
+            .menu-item .flex {
+                gap: 6px !important;
+            }
+
+            .category-btn {
+                font-size: 10px !important;
+                padding: 4px 8px !important;
+            }
+        }
+
+        /* Para pantallas súper pequeñas como 320px */
+        @media (max-width: 320px) {
+            .menu-item {
+                padding: 6px !important;
+            }
+
+            .add-to-cart {
+                padding: 2px 4px !important;
+                font-size: 8px !important;
+                border-radius: 12px !important;
+            }
+
+            /* Botón aún más compacto para pantallas muy pequeñas */
+            .add-to-cart {
+                min-width: 60px !important;
+            }
+
+            .menu-item h3 {
+                font-size: 11px !important;
+            }
+
+            .menu-item p {
+                font-size: 9px !important;
+            }
+
+            .menu-item .w-14 {
+                width: 36px !important;
+                height: 36px !important;
+            }
+
+            .menu-item .text-xl {
+                font-size: 12px !important;
+            }
+
+            .menu-item .text-base {
+                font-size: 11px !important;
+            }
+        }
+
+        /* Para pantallas extremadamente pequeñas como 280px */
+        @media (max-width: 280px) {
+            .add-to-cart {
+                font-size: 7px !important;
+                padding: 1px 3px !important;
+                min-width: 50px !important;
+            }
+
+            .menu-item .flex.items-center {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 4px !important;
+            }
+
+            .menu-item .text-base {
+                text-align: center !important;
+                font-size: 10px !important;
+            }
+        }
+
+        /* Utilidades adicionales */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-clamp: 2;
+        }
+
+        /* Sistema de expansión refinado */
+        .menu-item {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .menu-item:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            transform: translateY(-3px);
+        }
+
+        .menu-item.expanded {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 2px solid #3b82f6;
+            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.12);
+            transform: translateY(-2px);
+        }
+
+        /* Card Premium con estilos especiales */
+        .menu-item.premium {
+            background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 15%, #f59e0b 85%, #d97706 100%);
+            border: 3px solid #f59e0b;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            animation: premium-glow 3s ease-in-out infinite alternate;
+        }
+
+        .menu-item.premium::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #f59e0b, #fbbf24, #f59e0b, #d97706);
+            background-size: 400% 400%;
+            border-radius: 15px;
+            z-index: -1;
+            animation: gradient-shift 2s ease-in-out infinite;
+        }
+
+        .menu-item.premium::after {
+            content: '⭐';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            font-size: 20px;
+            animation: star-twinkle 1.5s ease-in-out infinite;
+            z-index: 10;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+        }
+
+        .menu-item.premium:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .menu-item.premium .w-14 {
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-item.premium h3 {
+            color: #92400e;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+        }
+
+        .menu-item.premium p {
+            color: #78350f;
+            font-weight: 500;
+        }
+
+        .menu-item.premium .text-green-600 {
+            color: #dc2626 !important;
+            font-weight: 800;
+            font-size: 18px !important;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+        }
+
+        .menu-item.premium .add-to-cart {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            border: 2px solid #991b1b;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .menu-item.premium .add-to-cart:hover {
+            background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.6);
+        }
+
+        .menu-item.premium .info-toggle-bar {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+            border-top-color: #f59e0b;
+            color: #92400e;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+        }
+
+        .menu-item.premium .info-toggle-bar:hover {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+            color: #451a03;
+        }
+
+        .menu-item.premium .info-toggle-bar.expanded {
+            background: linear-gradient(135deg, #92400e 0%, #78350f 50%, #451a03 100%);
+            color: #fbbf24;
+        }
+
+        @keyframes premium-glow {
+            0% {
+                box-shadow: 0 8px 25px rgba(245, 158, 11, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            }
+
+            100% {
+                box-shadow: 0 12px 35px rgba(245, 158, 11, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            }
+        }
+
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes star-twinkle {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Efectos especiales para selección premium */
+        .premium-selected {
+            animation: premium-celebration 2s ease-in-out;
+            position: relative;
+            z-index: 30;
+        }
+
+        .premium-selected::before {
+            animation: premium-explosion 1.5s ease-out;
+        }
+
+        @keyframes premium-celebration {
+            0% {
+                transform: translateY(-5px) scale(1.02);
+                box-shadow: 0 15px 40px rgba(245, 158, 11, 0.5);
+            }
+
+            25% {
+                transform: translateY(-8px) scale(1.05) rotate(1deg);
+                box-shadow: 0 20px 50px rgba(245, 158, 11, 0.7);
+            }
+
+            50% {
+                transform: translateY(-10px) scale(1.08) rotate(-1deg);
+                box-shadow: 0 25px 60px rgba(245, 158, 11, 0.8);
+            }
+
+            75% {
+                transform: translateY(-8px) scale(1.05) rotate(0.5deg);
+                box-shadow: 0 20px 50px rgba(245, 158, 11, 0.7);
+            }
+
+            100% {
+                transform: translateY(-5px) scale(1.02);
+                box-shadow: 0 15px 40px rgba(245, 158, 11, 0.5);
+            }
+        }
+
+        @keyframes premium-explosion {
+            0% {
+                background-size: 400% 400%;
+                opacity: 1;
+            }
+
+            50% {
+                background-size: 800% 800%;
+                opacity: 0.8;
+            }
+
+            100% {
+                background-size: 400% 400%;
+                opacity: 1;
+            }
+        }
+
+        /* Partículas de celebración */
+        .premium-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 12px;
+            z-index: 35;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #fbbf24;
+            border-radius: 50%;
+            animation: particle-float 1.5s ease-out forwards;
+        }
+
+        .particle:nth-child(1) {
+            left: 20%;
+            animation-delay: 0s;
+            background: #f59e0b;
+        }
+
+        .particle:nth-child(2) {
+            left: 40%;
+            animation-delay: 0.2s;
+            background: #fbbf24;
+        }
+
+        .particle:nth-child(3) {
+            left: 60%;
+            animation-delay: 0.4s;
+            background: #f59e0b;
+        }
+
+        .particle:nth-child(4) {
+            left: 80%;
+            animation-delay: 0.6s;
+            background: #fbbf24;
+        }
+
+        @keyframes particle-float {
+            0% {
+                transform: translateY(0) scale(0);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(-30px) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-60px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Efecto de brillo en el botón premium */
+        .premium-button-glow {
+            animation: button-premium-glow 1s ease-in-out;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.8), 0 0 40px rgba(220, 38, 38, 0.6), 0 0 60px rgba(220, 38, 38, 0.4) !important;
+        }
+
+        @keyframes button-premium-glow {
+            0% {
+                box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+                transform: translateY(-1px);
+            }
+
+            50% {
+                box-shadow: 0 0 30px rgba(220, 38, 38, 0.9), 0 0 60px rgba(220, 38, 38, 0.7);
+                transform: translateY(-3px) scale(1.05);
+            }
+
+            100% {
+                box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+                transform: translateY(-1px);
+            }
+        }
+
+        /* Sonido visual */
+        .premium-sound-wave {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            border: 3px solid #fbbf24;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            animation: sound-wave 1s ease-out;
+            z-index: 35;
+        }
+
+        @keyframes sound-wave {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(3);
+                opacity: 0;
+            }
+        }
+
+        /* Barra de información refinada */
+        .info-toggle-bar {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 30%, #7dd3fc 70%, #38bdf8 100%);
+            padding: 10px 14px;
+            margin: 14px -12px -12px -12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 0 0 10px 10px;
+            border-top: 2px solid #e2e8f0;
+            position: relative;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(56, 189, 248, 0.1);
+        }
+
+        .info-toggle-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(37, 99, 235, 0.12));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .info-toggle-bar:hover {
+            background: linear-gradient(135deg, #bae6fd 0%, #7dd3fc 30%, #38bdf8 70%, #0ea5e9 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(56, 189, 248, 0.25);
+        }
+
+        .info-toggle-bar:hover::before {
+            opacity: 1;
+        }
+
+        .info-toggle-bar.expanded {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 30%, #60a5fa 70%, #93c5fd 100%);
+            color: white;
+            border-top-color: #3b82f6;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-toggle-bar.expanded::before {
+            opacity: 0;
+        }
+
+        .expand-icon {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%);
+            color: #3b82f6;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 3px 8px rgba(59, 130, 246, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            position: relative;
+        }
+
+        .expand-icon::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #3b82f6, #60a5fa, #93c5fd);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .expand-icon:hover {
+            transform: scale(1.15);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            background: linear-gradient(135deg, #ffffff 0%, #dbeafe 50%, #bfdbfe 100%);
+        }
+
+        .expand-icon:hover::before {
+            opacity: 1;
+        }
+
+        .info-toggle-bar.expanded .expand-icon {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #dbeafe 100%);
+            color: #1e40af;
+            transform: rotate(180deg) scale(1.1);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 1);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .info-toggle-bar.expanded .expand-icon::before {
+            background: linear-gradient(135deg, #ffffff, #f0f9ff, #dbeafe);
+            opacity: 1;
+        }
+
+        /* Contenido expandible refinado */
+        .expand-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            margin: 0 -12px;
+            padding: 0 16px;
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        .expand-content.active {
+            max-height: 350px;
+            padding: 20px 16px;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Tags de ingredientes mejorados */
+        .ingredient-tag {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            color: #374151;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            margin: 2px;
+            display: inline-block;
+            border: 1px solid #d1d5db;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .ingredient-tag:hover {
+            background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Información nutricional mejorada */
+        .food-info {
+            font-size: 11px;
+            color: #4b5563;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid #e5e7eb;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .food-info .grid>div {
+            padding: 6px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.2s ease;
+        }
+
+        .food-info .grid>div:hover {
+            background: #f8fafc;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .food-info .font-medium {
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        /* Descripción mejorada */
+        .expand-content p {
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .expand-content strong {
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        /* Animación sutil al expandir */
+        .expand-content .space-y-3>div {
+            animation: slideInUp 0.3s ease forwards;
+            opacity: 0;
+        }
+
+        .expand-content.active .space-y-3>div {
+            animation-delay: 0.1s;
+            opacity: 1;
+        }
+
+        /* Mejoras adicionales para micro-interacciones */
+        .info-toggle-bar .text-sm {
+            transition: all 0.3s ease;
+        }
+
+        .info-toggle-bar:hover .text-sm {
+            transform: translateX(2px);
+        }
+
+        .info-toggle-bar.expanded .text-sm {
+            font-weight: 600;
+        }
+
+        /* Efecto de pulso sutil para indicar interactividad */
+        .info-toggle-bar::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -2px;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .info-toggle-bar:hover::after {
+            width: 80%;
+        }
+
+        .info-toggle-bar.expanded::after {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Animación más suave para el contenido */
+        .expand-content>.space-y-3 {
+            transition: all 0.3s ease;
+        }
+
+        .expand-content.active>.space-y-3 {
+            transform: translateY(0);
+        }
+
+        /* Mejora en responsividad para móviles */
+        @media (max-width: 480px) {
+            .info-toggle-bar {
+                padding: 8px 12px;
+                margin: 12px -12px -12px -12px;
+            }
+
+            .expand-icon {
+                width: 22px;
+                height: 22px;
+                font-size: 10px;
+            }
+
+            .expand-content.active {
+                max-height: 300px;
+                padding: 16px 12px;
+            }
+
+            .ingredient-tag {
+                font-size: 9px;
+                padding: 2px 6px;
+            }
+
+            .food-info {
+                padding: 10px;
+            }
+        }
+
+        /* Botón responsive que se adapta automáticamente */
+        .btn-responsive {
+            min-width: 0;
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Layout que evita overflow */
+        .no-overflow {
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        /* Scroll horizontal sin barra visible */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Botón de selección activo */
+        .selected-item {
+            background-color: #f97316 !important;
+        }
+
+        .selected-item:hover {
+            background-color: #ea580c !important;
+        }
+
+        /* Selector de idiomas simple */
+        .language-selector {
+            position: relative;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            min-width: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        /* Indicador de idiomas compacto y elegante */
+        .language-globe-indicator {
+            position: relative;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .language-globe-indicator:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+        }
+
+        .globe-icon {
+            font-size: 16px;
+            animation: globe-spin 4s linear infinite;
+        }
+
+        @keyframes globe-spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .language-count-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #ef4444;
+            color: white;
+            font-size: 9px;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: badge-pulse 2s ease-in-out infinite;
+            border: 2px solid white;
+        }
+
+        @keyframes badge-pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            }
+
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 4px rgba(239, 68, 68, 0);
+            }
+        }
+
+        /* Mejorar el botón del selector de idiomas */
+        #languageBtn {
+            position: relative;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border: 2px solid #3b82f6;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+        }
+
+        #languageBtn:hover {
+            background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%);
+            border-color: #2563eb;
+            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .language-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f3f4f6;
+            transition: background-color 0.2s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .language-option:hover {
+            background-color: #f9fafb;
+        }
+
+        .language-option:last-child {
+            border-bottom: none;
+        }
+
+        .language-option.active {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+            font-weight: 500;
+        }
+
+        .flag-emoji {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Animación para el dropdown */
+        .language-dropdown.hidden {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+        }
+
+        .language-dropdown {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.2s ease;
+        }
+
+        /* Responsive para el selector de idiomas */
+        @media (max-width: 480px) {
+            .language-dropdown {
+                right: -10px;
+                min-width: 180px;
+            }
+
+            .language-option {
+                padding: 6px 10px;
+                font-size: 13px;
+            }
+
+            .flag-emoji {
+                font-size: 16px;
+                width: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800"> <!-- Header fijo optimizado para móviles -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200">
+        <div class="w-full px-3 py-2">
+            <div class="flex items-center justify-between max-w-sm mx-auto">
+                <h1 class="text-lg font-bold text-gray-900 truncate flex-1 min-w-0" data-text="restaurant-name">🍽️ Mi
+                    Restaurante</h1>
+                <div class="flex items-center gap-2"> <!-- Selector de idiomas con ícono de bandera rotativo -->
+                    <div class="language-selector relative">
+                        <button id="languageBtn"
+                            class="flex items-center gap-1 px-2 py-1.5 text-gray-600 hover:text-gray-800 transition-colors bg-white hover:bg-gray-50 rounded border border-gray-300">
+                            <!-- Bandera rotativa que cambia automáticamente -->
+                            <span id="rotatingFlag" class="text-base">🇪🇸</span>
+                            <!-- Flecha pequeña -->
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <div id="languageDropdown" class="language-dropdown hidden">
+                            <div class="language-option active" data-lang="es">
+                                <span class="flag-emoji">🇪🇸</span>
+                                <span>Español</span>
+                            </div>
+                            <div class="language-option" data-lang="en">
+                                <span class="flag-emoji">🇺🇸</span>
+                                <span>English</span>
+                            </div>
+                            <div class="language-option" data-lang="fr">
+                                <span class="flag-emoji">🇫🇷</span>
+                                <span>Français</span>
+                            </div>
+                            <div class="language-option" data-lang="de">
+                                <span class="flag-emoji">🇩🇪</span>
+                                <span>Deutsch</span>
+                            </div>
+                            <div class="language-option" data-lang="pt">
+                                <span class="flag-emoji">🇧🇷</span>
+                                <span>Português</span>
+                            </div>
+                            <div class="language-option" data-lang="it">
+                                <span class="flag-emoji">🇮🇹</span>
+                                <span>Italiano</span>
+                            </div>
+                            <div class="language-option" data-lang="zh">
+                                <span class="flag-emoji">🇨🇳</span>
+                                <span>中文</span>
+                            </div>
+                            <div class="language-option" data-lang="ja">
+                                <span class="flag-emoji">🇯🇵</span>
+                                <span>日本語</span>
+                            </div>
+                            <div class="language-option" data-lang="ru">
+                                <span class="flag-emoji">🇷🇺</span>
+                                <span>Русский</span>
+                            </div>
+                            <div class="language-option" data-lang="nl">
+                                <span class="flag-emoji">🇳🇱</span>
+                                <span>Nederlands</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Botón del carrito -->
+                    <button id="cartBtn"
+                        class="relative p-2 text-gray-600 hover:text-gray-900 transition-colors flex-shrink-0">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                        <span id="cartCount"
+                            class="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden font-medium">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navegación de categorías sticky optimizada -->
+    <nav class="sticky top-12 z-40 bg-white border-b border-gray-200 shadow-sm">
+        <div class="w-full px-2 py-1">
+            <div class="flex space-x-1 overflow-x-auto scrollbar-hide pb-1">
+                <button
+                    class="category-btn flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600 transition-colors whitespace-nowrap flex-shrink-0 btn-responsive"
+                    data-category="entradas" data-text="nav-appetizers">
+                    🥗 <span data-text="appetizers">Entradas</span>
+                </button>
+                <button
+                    class="category-btn flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600 transition-colors whitespace-nowrap flex-shrink-0 btn-responsive"
+                    data-category="principales" data-text="nav-mains">
+                    🍖 <span data-text="mains">Principales</span>
+                </button>
+                <button
+                    class="category-btn flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600 transition-colors whitespace-nowrap flex-shrink-0 btn-responsive"
+                    data-category="bebidas" data-text="nav-drinks">
+                    🥤 <span data-text="drinks">Bebidas</span>
+                </button>
+                <button
+                    class="category-btn flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600 transition-colors whitespace-nowrap flex-shrink-0 btn-responsive"
+                    data-category="postres" data-text="nav-desserts">
+                    🍰 <span data-text="desserts">Postres</span>
+                </button>
+            </div>
+        </div>
+    </nav><!-- Contenido principal optimizado para móviles -->
+    <main class="w-full px-3 py-3 pb-20"> <!-- Sección Entradas -->
+        <section id="entradas" class="category-section mb-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-3 flex items-center px-1">
+                <span class="text-xl mr-2">🥗</span>
+                <span data-text="appetizers">Entradas</span>
+            </h2>
+            <div class="space-y-3">
+                <div class="menu-item bg-white rounded-lg p-3 shadow-sm border border-gray-200 fade-in">
+                    <div class="flex items-start space-x-2">
+                        <div
+                            class="w-14 h-14 bg-gray-200 rounded-lg flex-shrink-0 img-placeholder flex items-center justify-center">
+                            <span class="text-xl">🥗</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-medium text-gray-900 text-sm">Ensalada César</h3>
+                            <p class="text-xs text-gray-600 mt-1 line-clamp-2">Lechuga, crutones, queso parmesano,
+                                aderezo césar</p>
+
+                            <div class="flex items-center justify-between mt-2 gap-2">
+                                <span class="text-base font-semibold text-green-600 flex-shrink-0">$12.99</span>
+                                <button
+                                    class="add-to-cart bg-green-600 text-white px-3 py-1.5 rounded-full text-xs font-medium hover:bg-green-700 transition-colors active:bg-green-800 whitespace-nowrap flex-shrink-0 btn-responsive"
+                                    data-name="Ensalada César" data-price="12.99" data-text="select-btn"
+                                    onclick="event.stopPropagation()">
+                                    ✓ Seleccionar
+                                </button>
+                            </div>
+                        </div>
+                    </div> <!-- Barra de información mejorada -->
+                    <div class="info-toggle-bar" onclick="toggleItemExpansion(this)">
+                        <span class="text-sm font-medium">💡 Detalles del plato</span>
+                        <div class="expand-icon">▼</div>
+                    </div>
+
+                    <!-- Contenido expandible -->
+                    <div class="expand-content">
+                        <div class="space-y-3">
+                            <div>
+                                <p class="text-xs text-gray-700 mb-3 leading-relaxed">
+                                    <strong>🥗 ¿Qué incluye?</strong><br>
+                                    Lechuga romana fresca y crujiente, crutones artesanales dorados, queso parmesano
+                                    rallado al momento y nuestro exclusivo aderezo césar casero. Servido en plato grande
+                                    con pan tostado.
+                                </p>
+
+                                <div class="mb-3">
+                                    <p class="text-xs font-semibold text-gray-800 mb-2 flex items-center">
+                                        🌿 Ingredientes principales:
+                                    </p>
+                                    <div class="flex flex-wrap gap-1">
+                                        <span class="ingredient-tag">🥬 Lechuga romana</span>
+                                        <span class="ingredient-tag">🍞 Crutones artesanales</span>
+                                        <span class="ingredient-tag">🧀 Parmesano fresco</span>
+                                        <span class="ingredient-tag">🥄 Aderezo césar casero</span>
+                                        <span class="ingredient-tag">🍋 Jugo de limón</span>
+                                    </div>
+                                </div>
+
+                                <div class="food-info">
+                                    <div class="grid grid-cols-3 gap-2 text-center">
+                                        <div>
+                                            <div class="font-medium text-green-700">🍽️ Grande</div>
+                                            <div class="text-xs text-green-600">Porción</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium text-blue-700">⏱️ 5min</div>
+                                            <div class="text-xs text-blue-600">Listo en</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium text-purple-700">🥬 Veggie</div>
+                                            <div class="text-xs text-purple-600">Vegetariano</div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 pt-2 border-t border-gray-200 text-center">
+                                        <span class="text-xs text-gray-600">✨ Especialidad de la casa</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item bg-white rounded-lg p-3 shadow-sm border border-gray-200 fade-in">
+                    <div class="flex items-start space-x-2">
+                        <div
+                            class="w-14 h-14 bg-gray-200 rounded-lg flex-shrink-0 img-placeholder flex items-center justify-center">
+                            <span class="text-xl">🍤</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-medium text-gray-900 text-sm">Camarones al Ajillo</h3>
+                            <p class="text-xs text-gray-600 mt-1 line-clamp-2">Camarones frescos con ajo, perejil y
+                                aceite de oliva</p>
+
+                            <div class="flex items-center justify-between mt-2 gap-2">
+                                <span class="text-base font-semibold text-green-600 flex-shrink-0">$18.99</span>
+                                <button
+                                    class="add-to-cart bg-green-600 text-white px-3 py-1.5 rounded-full text-xs font-medium hover:bg-green-700 transition-colors active:bg-green-800 whitespace-nowrap flex-shrink-0 btn-responsive"
+                                    data-name="Camarones al Ajillo" data-price="18.99" data-text="select-btn"
+                                    onclick="event.stopPropagation()">
+                                    ✓ Seleccionar
+                                </button>
+                            </div>
+                        </div>
+                    </div> <!-- Barra de información mejorada -->
+                    <div class="info-toggle-bar" onclick="toggleItemExpansion(this)">
+                        <span class="text-sm font-medium">🦐 Detalles del plato</span>
+                        <div class="expand-icon">▼</div>
+                    </div>
+
+                    <!-- Contenido expandible -->
+                    <div class="expand-content">
+                        <div class="space-y-3">
+                            <div>
+                                <p class="text-xs text-gray-700 mb-3 leading-relaxed">
+                                    <strong>🍤 ¿Qué incluye?</strong><br>
+                                    8 camarones grandes frescos salteados al momento con ajo dorado, perejil fresco y
+                                    aceite de oliva extra virgen. Se acompaña con pan crujiente artesanal para disfrutar
+                                    la salsa.
+                                </p>
+
+                                <div class="mb-3">
+                                    <p class="text-xs font-semibold text-gray-800 mb-2 flex items-center">
+                                        🌊 Ingredientes del mar:
+                                    </p>
+                                    <div class="flex flex-wrap gap-1">
+                                        <span class="ingredient-tag">🦐 Camarones grandes</span>
+                                        <span class="ingredient-tag">🧄 Ajo fresco</span>
+                                        <span class="ingredient-tag">🌿 Perejil</span>
+                                        <span class="ingredient-tag">🫒 Aceite de oliva</span>
+                                        <span class="ingredient-tag">🍞 Pan artesanal</span>
+                                        <span class="ingredient-tag">🍋 Limón</span>
+                                    </div>
+                                </div>
+
+                                <div class="food-info">
+                                    <div class="grid grid-cols-3 gap-2 text-center">
+                                        <div>
+                                            <div class="font-medium text-orange-700">🔥 Caliente</div>
+                                            <div class="text-xs text-orange-600">Se sirve</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium text-blue-700">⏱️ 8min</div>
+                                            <div class="text-xs text-blue-600">Listo en</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium text-teal-700">🦐 Mariscos</div>
+                                            <div class="text-xs text-teal-600">Del mar</div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 pt-2 border-t border-gray-200 text-center">
+                                        <span class="text-xs text-gray-600">⭐ Receta tradicional mediterránea</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> <!-- Sección Principales -->
+        <section id="principales" class="category-section mb-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-3 flex items-center px-1">
+                <span class="text-xl mr-2">🍖</span>
+                <span data-text="mains">Platos Principales</span>
+            </h2>
+            <div class="space-y-3">
+                <div class="menu-item bg-white rounded-lg p-3 shadow-sm border border-gray-200 fade-in">
+                    <div class="flex items-start space-x-2">
+                        <div
+                            class="w-14 h-14 bg-gray-200 rounded-lg flex-shrink-0 img-placeholder flex items-center justify-center">
+                            <span class="text-xl">🥩</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-medium text-gray-900 text-sm">Bistec a la Parrilla</h3>
+                            <p class="text-xs text-gray-600 mt-1 line-clamp-2">Bistec de res con papas fritas y ensalada
+                            </p>
+                            <div class="flex items-center justify-between mt-2 gap-2">
+                                <span class="text-base font-semibold text-green-600 flex-shrink-0">$24.99</span> <button
+                                    class="add-to-cart bg-green-600 text-white px-3 py-1.5 rounded-full text-xs font-medium hover:bg-green-700 transition-colors active:bg-green-800 whitespace-nowrap flex-shrink-0 btn-responsive"
+                                    data-name="Bistec a la Parrilla" data-price="24.99" data-text="select-btn">
+                                    ✓ Seleccionar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item premium bg-white rounded-lg p-3 shadow-sm border border-gray-200 fade-in">
+                    <div class="flex items-start space-x-2">
+                        <div
+                            class="w-14 h-14 bg-gray-200 rounded-lg flex-shrink-0 img-placeholder flex items-center justify-center">
+                            <span class="text-xl">🐟</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-medium text-gray-900 text-sm">Salmón Premium del Chef</h3>
+                            <p class="text-xs text-gray-600 mt-1 line-clamp-2">Salmón noruego fresco a la parrilla con
+                                trufa negra, vegetales orgánicos y quinoa dorada</p>
+                            <div class="flex items-center justify-between mt-2 gap-2">
+                                <span class="text-base font-semibold text-green-600 flex-shrink-0">$28.99</span> <button
+                                    class="add-to-cart bg-green-600 text-white px-3 py-1.5 rounded-full text-xs font-medium hover:bg-green-700 transition-colors active:bg-green-800 whitespace-nowrap flex-shrink-0 btn-responsive"
+                                    data-name="Salmón Premium del Chef" data-price="28.99" data-text="select-btn">
+                                    ✓ Seleccionar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Barra de información para plato premium -->
+                    <div class="info-toggle-bar" onclick="toggleItemExpansion(this)">
+                        <span class="text-sm font-medium">👑 Especialidad del Chef</span>
+                        <div class="expand-icon">▼</div>
+                    </div>
+
+                    <!-- Contenido expandible premium -->
+                    <div class="expand-content">
+                        <div class="space-y-3">
+                            <div>
+                                <p class="text-xs text-gray-700 mb-3 leading-relaxed">
+                                    <strong>🐟 ¿Qué incluye?</strong><br>
+                                    Salmón noruego de la más alta calidad, marinado 24h con hierbas aromáticas,
+                                    acompañado de trufa negra rallada, vegetales orgánicos de temporada salteados al wok
+                                    y quinoa dorada con almendras tostadas.
+                                </p>
+
+                                <div class="mb-3">
+                                    <p class="text-xs font-semibold text-gray-800 mb-2 flex items-center">
+                                        ⭐ Ingredientes premium:
+                                    </p>
+                                    <div class="flex flex-wrap gap-1">
+                                        <span class="ingredient-tag">🐟 Salmón noruego</span>
+                                        <span class="ingredient-tag">🍄 Trufa negra</span>
+                                        <span class="ingredient-tag">🥗 Vegetales orgánicos</span>
+                                        <span class="ingredient-tag">🌾 Quinoa dorada</span>
+                                        <span class="ingredient-tag">🌿 Hierbas aromáticas</span>
+                                        <span class="ingredient-tag">🥜 Almendras tostadas</span>
+                                    </div>
+                                </div>
+
+                                <div class="food-info">
+                                    <div class="grid grid-cols-3 gap-2 text-center">
+                                        <div>
+                                            <div class="font-medium text-purple-700">👑 Chef's Choice</div>
+                                            <div class="text-xs text-purple-600">Exclusivo</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium text-orange-700">⏱️ 15min</div>
+                                            <div class="text-xs text-orange-600">Preparación</div>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium text-emerald-700">🌱 Gourmet</div>
+                                            <div class="text-xs text-emerald-600">Saludable</div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2 pt-2 border-t border-gray-200 text-center">
+                                        <span class="text-xs text-gray-600">🏆 Plato ganador - Award 2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item bg-white rounded-lg p-3 shadow-sm border border-gray-200 fade-in">
+                    <div class="flex items-start space-x-2">
+                        <div
+                            class="w-14 h-14 bg-gray-200 rounded-lg flex-shrink-0 img-placeholder flex items-center justify-center">
+                            <span class="text-xl">🍝</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-medium text-gray-900 text-sm">Pasta Alfredo</h3>
+                            <p class="text-xs text-gray-600 mt-1 line-clamp-2">Fettuccine con salsa alfredo y pollo</p>
+                            <div class="flex items-center justify-between mt-2 gap-2">
+                                <span class="text-base font-semibold text-green-600 flex-shrink-0">$16.99</span>
+                                <button
+                                    class="add-to-cart bg-green-600 text-white px-3 py-1.5 rounded-full text-xs font-medium hover:bg-green-700 transition-colors active:bg-green-800 whitespace-nowrap flex-shrink-0 btn-responsive"
+                                    data-name="Pasta Alfredo" data-price="16.99" data-text="select-btn">
+                                    ✓ Seleccionar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> <!-- Sección Bebidas -->
+        <section id="bebidas" class="category-section mb-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-3 flex items-center px-1">
+                <span class="text-xl mr-2">🥤</span>
+                <span data-text="drinks">Bebidas</span>
+            </h2>
+            <div class="space-y-3">
+                <div class="menu-item bg-white rounded-lg p-3 shadow-sm border border-gray-200 fade-in">
+                    <div class="flex items-start space-x-2">
+                        <div
+                            class="w-14 h-14 bg-gray-200 rounded-lg flex-shrink-0 img-placeholder flex items-center justify-center">
+                            <span class="text-xl">🧃</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-medium text-gray-900 text-sm">Jugo Natural</h3>
+                            <p class="text-xs text-gray-600 mt-1 line-clamp-2">Naranja, piña, mango o maracuyá</p>
+                            <div class="flex items-center justify-between mt-2 gap-2">
+                                <span class="text-base font-semibold text-green-600 flex-shrink-0">$4.99</span>
+                                <button
+                                    class="add-to-cart bg-green-600 text-white px-3 py-1.5 rounded-full text-xs font-medium hover:bg-green-700 transition-colors active:bg-green-800 whitespace-nowrap flex-shrink-0 btn-responsive"
+                                    data-name="Jugo Natural" data-price="4.99" data-text="select-btn">
+                                    ✓ Seleccionar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item bg-white rounded-lg p-3 shadow-sm border border-gray-200 fade-in">
+                    <div class="flex items-start space-x-2">
+                        <div
+                            class="w-14 h-14 bg-gray-200 rounded-lg flex-shrink-0 img-placeholder flex items-center justify-center">
+                            <span class="text-xl">☕</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-medium text-gray-900 text-sm">Café</h3>
+                            <p class="text-xs text-gray-600 mt-1 line-clamp-2">Americano, cappuccino o latte</p>
+                            <div class="flex items-center justify-between mt-2 gap-2">
+                                <span class="text-base font-semibold text-green-600 flex-shrink-0">$3.99</span> <button
+                                    class="add-to-cart bg-green-600 text-white px-3 py-1.5 rounded-full text-xs font-medium hover:bg-green-700 transition-colors active:bg-green-800 whitespace-nowrap flex-shrink-0 btn-responsive"
+                                    data-name="Café" data-price="3.99" data-text="select-btn">
+                                    ✓ Seleccionar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> <!-- Sección Postres -->
+        <section id="postres" class="category-section mb-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-3 flex items-center px-1">
+                <span class="text-xl mr-2">🍰</span>
+                <span data-text="desserts">Postres</span>
+            </h2>
+            <div class="space-y-3">
+                <div class="menu-item bg-white rounded-lg p-3 shadow-sm border border-gray-200 fade-in">
+                    <div class="flex items-start space-x-2">
+                        <div
+                            class="w-14 h-14 bg-gray-200 rounded-lg flex-shrink-0 img-placeholder flex items-center justify-center">
+                            <span class="text-xl">🍰</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-medium text-gray-900 text-sm">Torta de Chocolate</h3>
+                            <p class="text-xs text-gray-600 mt-1 line-clamp-2">Deliciosa torta de chocolate con crema
+                            </p>
+                            <div class="flex items-center justify-between mt-2 gap-2">
+                                <span class="text-base font-semibold text-green-600 flex-shrink-0">$8.99</span>
+                                <button
+                                    class="add-to-cart bg-green-600 text-white px-3 py-1.5 rounded-full text-xs font-medium hover:bg-green-700 transition-colors active:bg-green-800 whitespace-nowrap flex-shrink-0 btn-responsive"
+                                    data-name="Torta de Chocolate" data-price="8.99" data-text="select-btn">
+                                    ✓ Seleccionar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-item bg-white rounded-lg p-3 shadow-sm border border-gray-200 fade-in">
+                    <div class="flex items-start space-x-2">
+                        <div
+                            class="w-14 h-14 bg-gray-200 rounded-lg flex-shrink-0 img-placeholder flex items-center justify-center">
+                            <span class="text-xl">🍨</span>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-medium text-gray-900 text-sm">Helado</h3>
+                            <p class="text-xs text-gray-600 mt-1 line-clamp-2">Vainilla, chocolate o fresa</p>
+                            <div class="flex items-center justify-between mt-2 gap-2">
+                                <span class="text-base font-semibold text-green-600 flex-shrink-0">$5.99</span>
+                                <button
+                                    class="add-to-cart bg-green-600 text-white px-3 py-1.5 rounded-full text-xs font-medium hover:bg-green-700 transition-colors active:bg-green-800 whitespace-nowrap flex-shrink-0 btn-responsive"
+                                    data-name="Helado" data-price="5.99" data-text="select-btn">
+                                    ✓ Seleccionar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main> <!-- Carrito flotante optimizado para móviles -->
+    <div id="cartModal" class="fixed inset-0 z-50 hidden">
+        <div class="fixed inset-0 bg-black bg-opacity-50" id="cartOverlay"></div>
+        <div class="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl mx-2 mb-2 transform translate-y-full transition-transform duration-300 max-h-[85vh] flex flex-col"
+            id="cartContent">
+            <div class="p-3 border-b border-gray-200 flex-shrink-0">
+                <div class="flex items-center justify-between">
+                    <div class="flex-1">
+                        <h3 class="text-base font-semibold text-gray-900" data-text="cart-title">Mi Selección</h3>
+                        <p class="text-xs text-gray-500" data-text="cart-subtitle">Muestra esto al vendedor</p>
+                    </div>
+                    <button id="closeCart" class="text-gray-500 hover:text-gray-700 p-1 flex-shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="cartItems" class="p-3 flex-1 overflow-y-auto min-h-0">
+                <p class="text-gray-500 text-center text-sm" data-text="empty-cart">Selecciona los productos que quieres
+                </p>
+            </div>
+            <div class="p-3 border-t border-gray-200 flex-shrink-0">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="font-semibold text-sm" data-text="total-label">Total Estimado:</span>
+                    <span id="cartTotal" class="text-lg font-bold text-green-600 flex-shrink-0">$0.00</span>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <button id="clearBtn"
+                        class="bg-gray-500 text-white py-2.5 px-3 rounded-lg font-medium hover:bg-gray-600 transition-colors text-sm"
+                        data-text="clear-btn">
+                        Limpiar
+                    </button>
+                    <button id="orderBtn"
+                        class="bg-blue-600 text-white py-2.5 px-3 rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed text-sm"
+                        data-text="show-vendor-btn">
+                        Mostrar al Vendedor
+                    </button>
+                </div>
+                <p class="text-xs text-gray-500 text-center mt-2" data-text="total-disclaimer">
+                    Este total es solo referencial. El vendedor confirmará el precio final.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript optimizado -->
+    <script>
+        // Variables globales
+        let cart = [];
+        let cartTotal = 0;
+        let currentLanguage = 'es';
+
+        // Traducciones
+        const translations = {
+            es: {
+                'restaurant-name': 'Menú',
+                'appetizers': 'Entradas',
+                'mains': 'Platos Principales',
+                'drinks': 'Bebidas',
+                'desserts': 'Postres',
+                'nav-appetizers': 'Entradas',
+                'nav-mains': 'Principales',
+                'nav-drinks': 'Bebidas',
+                'nav-desserts': 'Postres',
+                'cart-title': 'Mi Selección',
+                'cart-subtitle': 'Muestra esto al vendedor',
+                'empty-cart': 'Selecciona los productos que quieres',
+                'total-label': 'Total Estimado:',
+                'clear-btn': 'Limpiar',
+                'show-vendor-btn': 'Mostrar al Vendedor',
+                'close-view-btn': 'Cerrar Vista',
+                'vendor-title': 'PEDIDO DEL CLIENTE',
+                'vendor-subtitle': 'Vista para el vendedor',
+                'total-disclaimer': 'Este total es solo referencial. El vendedor confirmará el precio final.',
+                'select-btn': '✓ Seleccionar',
+                'selected-btn': '✓ Seleccionado'
+            },
+            en: {
+                'restaurant-name': 'Menu',
+                'appetizers': 'Appetizers',
+                'mains': 'Main Courses',
+                'drinks': 'Beverages',
+                'desserts': 'Desserts',
+                'nav-appetizers': 'Appetizers',
+                'nav-mains': 'Mains',
+                'nav-drinks': 'Drinks',
+                'nav-desserts': 'Desserts',
+                'cart-title': 'My Selection',
+                'cart-subtitle': 'Show this to the vendor',
+                'empty-cart': 'Select the products you want',
+                'total-label': 'Estimated Total:',
+                'clear-btn': 'Clear',
+                'show-vendor-btn': 'Show to Vendor',
+                'close-view-btn': 'Close View',
+                'vendor-title': 'CUSTOMER ORDER',
+                'vendor-subtitle': 'Vendor view',
+                'total-disclaimer': 'This total is for reference only. The vendor will confirm the final price.',
+                'select-btn': '✓ Select',
+                'selected-btn': '✓ Selected'
+            },
+            fr: {
+                'restaurant-name': 'Menu',
+                'appetizers': 'Entrées',
+                'mains': 'Plats Principaux',
+                'drinks': 'Boissons',
+                'desserts': 'Desserts',
+                'nav-appetizers': 'Entrées',
+                'nav-mains': 'Plats',
+                'nav-drinks': 'Boissons',
+                'nav-desserts': 'Desserts',
+                'cart-title': 'Ma Sélection',
+                'cart-subtitle': 'Montrez ceci au vendeur',
+                'empty-cart': 'Sélectionnez les produits que vous voulez',
+                'total-label': 'Total Estimé:',
+                'clear-btn': 'Effacer',
+                'show-vendor-btn': 'Montrer au Vendeur',
+                'close-view-btn': 'Fermer la Vue',
+                'vendor-title': 'COMMANDE CLIENT',
+                'vendor-subtitle': 'Vue vendeur',
+                'total-disclaimer': 'Ce total est indicatif seulement. Le vendeur confirmera le prix final.',
+                'select-btn': '✓ Sélectionner',
+                'selected-btn': '✓ Sélectionné'
+            },
+            de: {
+                'restaurant-name': 'Menü',
+                'appetizers': 'Vorspeisen',
+                'mains': 'Hauptgerichte',
+                'drinks': 'Getränke',
+                'desserts': 'Nachspeisen',
+                'nav-appetizers': 'Vorspeisen',
+                'nav-mains': 'Hauptgang',
+                'nav-drinks': 'Getränke',
+                'nav-desserts': 'Desserts',
+                'cart-title': 'Meine Auswahl',
+                'cart-subtitle': 'Zeigen Sie dies dem Verkäufer',
+                'empty-cart': 'Wählen Sie die gewünschten Produkte',
+                'total-label': 'Geschätzter Gesamt:',
+                'clear-btn': 'Löschen',
+                'show-vendor-btn': 'Dem Verkäufer zeigen',
+                'close-view-btn': 'Ansicht schließen',
+                'vendor-title': 'KUNDENBESTELLUNG',
+                'vendor-subtitle': 'Verkäufer-Ansicht',
+                'total-disclaimer': 'Diese Summe ist nur als Referenz. Der Verkäufer wird den Endpreis bestätigen.',
+                'select-btn': '✓ Auswählen',
+                'selected-btn': '✓ Ausgewählt'
+            },
+            pt: {
+                'restaurant-name': '🍽️ Meu Restaurante',
+                'appetizers': 'Entradas',
+                'mains': 'Pratos Principais',
+                'drinks': 'Bebidas',
+                'desserts': 'Sobremesas',
+                'nav-appetizers': 'Entradas',
+                'nav-mains': 'Principais',
+                'nav-drinks': 'Bebidas',
+                'nav-desserts': 'Sobremesas',
+                'cart-title': 'Minha Seleção',
+                'cart-subtitle': 'Mostre isso ao vendedor',
+                'empty-cart': 'Selecione os produtos que deseja',
+                'total-label': 'Total Estimado:',
+                'clear-btn': 'Limpar',
+                'show-vendor-btn': 'Mostrar ao Vendedor',
+                'close-view-btn': 'Fechar Vista',
+                'vendor-title': 'PEDIDO DO CLIENTE',
+                'vendor-subtitle': 'Vista do vendedor',
+                'total-disclaimer': 'Este total é apenas referencial. O vendedor confirmará o preço final.',
+                'select-btn': '✓ Selecionar',
+                'selected-btn': '✓ Selecionado'
+            },
+            it: {
+                'restaurant-name': '🍽️ Il Mio Ristorante',
+                'appetizers': 'Antipasti',
+                'mains': 'Piatti Principali',
+                'drinks': 'Bevande',
+                'desserts': 'Dolci',
+                'nav-appetizers': 'Antipasti',
+                'nav-mains': 'Principali',
+                'nav-drinks': 'Bevande',
+                'nav-desserts': 'Dolci',
+                'cart-title': 'La Mia Selezione',
+                'cart-subtitle': 'Mostra questo al venditore',
+                'empty-cart': 'Seleziona i prodotti che vuoi',
+                'total-label': 'Totale Stimato:',
+                'clear-btn': 'Cancella',
+                'show-vendor-btn': 'Mostra al Venditore',
+                'close-view-btn': 'Chiudi Vista',
+                'vendor-title': 'ORDINE CLIENTE',
+                'vendor-subtitle': 'Vista venditore',
+                'total-disclaimer': 'Questo totale è solo indicativo. Il venditore confermerà il prezzo finale.',
+                'select-btn': '✓ Seleziona',
+                'selected-btn': '✓ Selezionato'
+            },
+            zh: {
+                'restaurant-name': '🍽️ 我的餐厅',
+                'appetizers': '开胃菜',
+                'mains': '主菜',
+                'drinks': '饮料',
+                'desserts': '甜点',
+                'nav-appetizers': '开胃菜',
+                'nav-mains': '主菜',
+                'nav-drinks': '饮料',
+                'nav-desserts': '甜点',
+                'cart-title': '我的选择',
+                'cart-subtitle': '向卖家展示这个',
+                'empty-cart': '选择您想要的产品',
+                'total-label': '预估总计:',
+                'clear-btn': '清除',
+                'show-vendor-btn': '显示给卖家',
+                'close-view-btn': '关闭视图',
+                'vendor-title': '客户订单',
+                'vendor-subtitle': '卖家视图',
+                'total-disclaimer': '此总计仅供参考。卖家将确认最终价格。',
+                'select-btn': '✓ 选择',
+                'selected-btn': '✓ 已选择'
+            },
+            ja: {
+                'restaurant-name': '🍽️ 私のレストラン',
+                'appetizers': '前菜',
+                'mains': 'メイン料理',
+                'drinks': '飲み物',
+                'desserts': 'デザート',
+                'nav-appetizers': '前菜',
+                'nav-mains': 'メイン',
+                'nav-drinks': '飲み物',
+                'nav-desserts': 'デザート',
+                'cart-title': '私の選択',
+                'cart-subtitle': 'これを販売者に見せてください',
+                'empty-cart': '欲しい商品を選択してください',
+                'total-label': '推定合計:',
+                'clear-btn': 'クリア',
+                'show-vendor-btn': '販売者に見せる',
+                'close-view-btn': 'ビューを閉じる',
+                'vendor-title': '顧客注文',
+                'vendor-subtitle': '販売者ビュー',
+                'total-disclaimer': 'この合計は参考のみです。販売者が最終価格を確認します。',
+                'select-btn': '✓ 選択',
+                'selected-btn': '✓ 選択済み'
+            },
+            ru: {
+                'restaurant-name': '🍽️ Мой Ресторан',
+                'appetizers': 'Закуски',
+                'mains': 'Основные блюда',
+                'drinks': 'Напитки',
+                'desserts': 'Десерты',
+                'nav-appetizers': 'Закуски',
+                'nav-mains': 'Основные',
+                'nav-drinks': 'Напитки',
+                'nav-desserts': 'Десерты',
+                'cart-title': 'Мой выбор',
+                'cart-subtitle': 'Покажите это продавцу',
+                'empty-cart': 'Выберите продукты, которые хотите',
+                'total-label': 'Примерный итог:',
+                'clear-btn': 'Очистить',
+                'show-vendor-btn': 'Показать продавцу',
+                'close-view-btn': 'Закрыть вид',
+                'vendor-title': 'ЗАКАЗ КЛИЕНТА',
+                'vendor-subtitle': 'Вид продавца',
+                'total-disclaimer': 'Эта сумма только для справки. Продавец подтвердит окончательную цену.',
+                'select-btn': '✓ Выбрать',
+                'selected-btn': '✓ Выбрано'
+            },
+            nl: {
+                'restaurant-name': '🍽️ Mijn Restaurant',
+                'appetizers': 'Voorgerechten',
+                'mains': 'Hoofdgerechten',
+                'drinks': 'Dranken',
+                'desserts': 'Nagerechten',
+                'nav-appetizers': 'Voorgerechten',
+                'nav-mains': 'Hoofdgerecht',
+                'nav-drinks': 'Dranken',
+                'nav-desserts': 'Nagerechten',
+                'cart-title': 'Mijn Selectie',
+                'cart-subtitle': 'Toon dit aan de verkoper',
+                'empty-cart': 'Selecteer de producten die je wilt',
+                'total-label': 'Geschat Totaal:',
+                'clear-btn': 'Wissen',
+                'show-vendor-btn': 'Toon aan Verkoper',
+                'close-view-btn': 'Sluit Weergave',
+                'vendor-title': 'KLANTBESTELLING',
+                'vendor-subtitle': 'Verkoper weergave',
+                'total-disclaimer': 'Dit totaal is alleen ter referentie. De verkoper zal de definitieve prijs bevestigen.',
+                'select-btn': '✓ Selecteren',
+                'selected-btn': '✓ Geselecteerd'
+            }
+        };
+
+        const languageFlags = {
+            es: '🇪🇸',
+            en: '🇺🇸',
+            fr: '🇫🇷',
+            de: '🇩🇪',
+            pt: '🇧🇷',
+            it: '🇮🇹',
+            zh: '🇨🇳',
+            ja: '🇯🇵',
+            ru: '🇷🇺',
+            nl: '🇳🇱'
+        };        // DOM Elements
+        const cartBtn = document.getElementById('cartBtn');
+        const cartModal = document.getElementById('cartModal');
+        const cartContent = document.getElementById('cartContent');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const closeCart = document.getElementById('closeCart');
+        const cartCount = document.getElementById('cartCount');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotalEl = document.getElementById('cartTotal');
+        const orderBtn = document.getElementById('orderBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const addToCartBtns = document.querySelectorAll('.add-to-cart');
+        const languageBtn = document.getElementById('languageBtn');
+        const languageDropdown = document.getElementById('languageDropdown');
+        const rotatingFlag = document.getElementById('rotatingFlag');        // Rotación automática de banderas
+        const flagsArray = ['🇪🇸', '🇺🇸', '🇫🇷', '🇩🇪', '🇧🇷', '🇮🇹', '🇨🇳', '🇯🇵', '🇷🇺', '🇳🇱'];
+        let currentFlagIndex = 0;
+        let userHasSelectedLanguage = false; // Nueva variable para controlar si el usuario ya seleccionó
+
+        function rotateFlagDisplay() {
+            // Solo rotar si el usuario no ha seleccionado manualmente un idioma
+            if (!userHasSelectedLanguage) {
+                currentFlagIndex = (currentFlagIndex + 1) % flagsArray.length;
+                rotatingFlag.textContent = flagsArray[currentFlagIndex];
+            }
+        }
+
+        // Iniciar rotación automática cada 2 segundos
+        window.flagRotationInterval = setInterval(rotateFlagDisplay, 2000);
+
+        // Funciones de idioma
+        function translatePage(lang) {
+            currentLanguage = lang;
+            const translation = translations[lang];
+
+            // Actualizar todos los elementos con data-text
+            document.querySelectorAll('[data-text]').forEach(element => {
+                const key = element.getAttribute('data-text');
+                if (translation[key]) {
+                    element.textContent = translation[key];
+                }
+            });            // Actualizar botones de selección
+            document.querySelectorAll('.add-to-cart').forEach(btn => {
+                const isSelected = btn.classList.contains('bg-orange-500');
+                btn.textContent = isSelected ? translation['selected-btn'] : translation['select-btn'];
+            });
+
+            // Marcar que el usuario seleccionó manualmente un idioma
+            userHasSelectedLanguage = true;
+
+            // Detener la rotación automática permanentemente
+            clearInterval(window.flagRotationInterval);
+
+            // Mostrar la bandera del idioma seleccionado
+            rotatingFlag.textContent = languageFlags[lang];
+
+            // Actualizar idioma del HTML
+            document.documentElement.lang = lang;
+
+            // Actualizar estado activo en dropdown
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.dataset.lang === lang) {
+                    option.classList.add('active');
+                }
+            });
+
+            // Guardar preferencia
+            localStorage.setItem('preferred-language', lang);
+
+            // Actualizar carrito si está abierto
+            if (cart.length === 0) {
+                const emptyText = cartItems.querySelector('p');
+                if (emptyText) {
+                    emptyText.textContent = translation['empty-cart'];
+                }
+            }
+        }
+
+        function toggleLanguageDropdown() {
+            languageDropdown.classList.toggle('hidden');
+        }
+
+        function hideLanguageDropdown() {
+            languageDropdown.classList.add('hidden');
+        }
+
+        // Cargar idioma guardado
+        function loadSavedLanguage() {
+            const savedLang = localStorage.getItem('preferred-language');
+            if (savedLang && translations[savedLang]) {
+                translatePage(savedLang);
+            }
+        }        // Funciones del carrito
+        function updateCartDisplay() {
+            const translation = translations[currentLanguage];
+
+            if (cart.length === 0) {
+                cartCount.classList.add('hidden');
+                cartItems.innerHTML = `<p class="text-gray-500 text-center text-sm" data-text="empty-cart">${translation['empty-cart']}</p>`;
+                orderBtn.disabled = true;
+                clearBtn.disabled = true;
+            } else {
+                cartCount.textContent = cart.length;
+                cartCount.classList.remove('hidden'); cartItems.innerHTML = cart.map((item, index) => `
+                    <div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
+                        <div class="flex-1 min-w-0 pr-2">
+                            <h4 class="font-medium text-sm text-gray-900 truncate">${item.name}</h4>
+                            <p class="text-green-600 font-semibold text-base">$${item.price}</p>
+                        </div>
+                        <button onclick="removeFromCart(${index})" class="text-red-500 hover:text-red-700 p-1 flex-shrink-0">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                        </button>
+                    </div>
+                `).join('');
+
+                orderBtn.disabled = false;
+                clearBtn.disabled = false;
+            }
+
+            cartTotalEl.textContent = `$${cartTotal.toFixed(2)}`;
+        }
+
+        function addToCart(name, price) {
+            cart.push({ name, price: parseFloat(price) });
+            cartTotal += parseFloat(price);
+            updateCartDisplay();
+        } function removeFromCart(index) {
+            const removedItem = cart[index];
+            cartTotal -= cart[index].price;
+            cart.splice(index, 1);
+
+            // Encontrar y resetear el botón correspondiente
+            const translation = translations[currentLanguage];
+            const allButtons = document.querySelectorAll('.add-to-cart');
+            allButtons.forEach(btn => {
+                if (btn.dataset.name === removedItem.name) {
+                    btn.textContent = translation['select-btn'];
+                    btn.classList.remove('bg-orange-500', 'bg-orange-600');
+                    btn.classList.add('bg-green-600');
+                }
+            });
+
+            updateCartDisplay();
+        }
+
+        function clearCart() {
+            cart = [];
+            cartTotal = 0;
+            updateCartDisplay();
+
+            // Resetear todos los botones
+            const translation = translations[currentLanguage];
+            const allButtons = document.querySelectorAll('.add-to-cart');
+            allButtons.forEach(btn => {
+                btn.textContent = translation['select-btn'];
+                btn.classList.remove('bg-orange-500', 'bg-orange-600');
+                btn.classList.add('bg-green-600');
+            });
+        }
+
+        function showCart() {
+            cartModal.classList.remove('hidden');
+            setTimeout(() => {
+                cartContent.style.transform = 'translateY(0)';
+            }, 10);
+        }
+
+        function hideCart() {
+            cartContent.style.transform = 'translateY(100%)';
+            setTimeout(() => {
+                cartModal.classList.add('hidden');
+            }, 300);
+        }        // Navegación por categorías
+        function scrollToCategory(categoryId) {
+            const element = document.getElementById(categoryId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }        // Función para expandir/contraer items
+        function toggleItemExpansion(barElement) {
+            const menuItem = barElement.closest('.menu-item');
+            const expandContent = barElement.nextElementSibling;
+            const expandIcon = barElement.querySelector('.expand-icon');
+
+            // Toggle estado activo
+            const isCurrentlyExpanded = barElement.classList.contains('expanded');
+
+            // Cerrar otros items expandidos
+            document.querySelectorAll('.info-toggle-bar.expanded').forEach(bar => {
+                if (bar !== barElement) {
+                    bar.classList.remove('expanded');
+                    bar.nextElementSibling.classList.remove('active');
+                    bar.closest('.menu-item').classList.remove('expanded');
+                }
+            });
+
+            if (isCurrentlyExpanded) {
+                // Contraer
+                barElement.classList.remove('expanded');
+                expandContent.classList.remove('active');
+                menuItem.classList.remove('expanded');
+            } else {
+                // Expandir
+                barElement.classList.add('expanded');
+                expandContent.classList.add('active');
+                menuItem.classList.add('expanded');
+            }
+        }        // Crear celebración premium
+        function createPremiumCelebration(menuItem, button) {
+            // Animación principal de la card
+            menuItem.classList.add('premium-selected');
+
+            // Crear partículas doradas
+            const particlesContainer = document.createElement('div');
+            particlesContainer.className = 'premium-particles';
+
+            for (let i = 0; i < 4; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particlesContainer.appendChild(particle);
+            }
+
+            menuItem.appendChild(particlesContainer);
+
+            // Crear onda de sonido visual
+            const soundWave = document.createElement('div');
+            soundWave.className = 'premium-sound-wave';
+            menuItem.appendChild(soundWave);
+
+            // Vibración en móviles
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100, 50, 200]);
+            }
+
+            // Limpiar efectos después de la animación
+            setTimeout(() => {
+                menuItem.classList.remove('premium-selected');
+                if (particlesContainer.parentNode) {
+                    particlesContainer.remove();
+                }
+                if (soundWave.parentNode) {
+                    soundWave.remove();
+                }
+            }, 2000);
+
+            // Crear efecto de confetti
+            createConfetti(menuItem);
+        }        // Efecto confetti premium
+        function createConfetti(container) {
+            const colors = ['#fbbf24', '#f59e0b', '#d97706', '#dc2626'];
+            const rect = container.getBoundingClientRect();
+
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.left = rect.left + (rect.width * Math.random()) + 'px';
+                    confetti.style.top = rect.top + (rect.height * 0.3) + 'px';
+                    confetti.style.width = '6px';
+                    confetti.style.height = '6px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = '50%';
+                    confetti.style.pointerEvents = 'none';
+                    confetti.style.zIndex = '40';
+
+                    document.body.appendChild(confetti);
+
+                    const animation = confetti.animate([
+                        {
+                            transform: 'translateY(0px) rotate(0deg)',
+                            opacity: 1
+                        },
+                        {
+                            transform: `translateY(${100 + Math.random() * 100}px) rotate(${360 * Math.random()}deg)`,
+                            opacity: 0
+                        }
+                    ], {
+                        duration: 1000 + Math.random() * 500,
+                        easing: 'ease-out'
+                    });
+
+                    animation.onfinish = () => confetti.remove();
+                }, i * 50);
+            }
+        }// Event listeners
+        cartBtn.addEventListener('click', showCart);
+        cartOverlay.addEventListener('click', hideCart);
+        closeCart.addEventListener('click', hideCart);
+        clearBtn.addEventListener('click', clearCart);
+
+        // Language selector event listeners
+        languageBtn.addEventListener('click', toggleLanguageDropdown);
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
+                hideLanguageDropdown();
+            }
+        });
+
+        // Language selection
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', function () {
+                const lang = this.dataset.lang;
+                translatePage(lang);
+                hideLanguageDropdown();
+            });
+        });
+
+        // Event listener dinámico para el botón de orden
+        orderBtn.addEventListener('click', function (e) {
+            const translation = translations[currentLanguage];
+
+            if (orderBtn.textContent === translation['close-view-btn']) {
+                restoreNormalView();
+                return;
+            }
+
+            if (cart.length === 0) return;
+
+            // Cambiar a vista de vendedor
+            cartContent.classList.add('vendor-view');
+            cartContent.querySelector('h3').textContent = translation['vendor-title'];
+            cartContent.querySelector('.text-xs').textContent = translation['vendor-subtitle'];
+
+            // Ocultar botón de eliminar items en vista de vendedor
+            const deleteButtons = cartContent.querySelectorAll('button[onclick*="removeFromCart"]');
+            deleteButtons.forEach(btn => btn.style.display = 'none');            // Cambiar botones
+            orderBtn.textContent = translation['close-view-btn'];
+            orderBtn.className = 'w-full bg-red-600 text-white py-3 rounded-lg font-medium hover:bg-red-700 transition-colors text-lg';
+            clearBtn.style.display = 'none';
+
+            // Hacer la ventana más grande
+            cartContent.style.maxHeight = '90vh';
+            cartContent.style.height = 'auto';
+        });
+
+        // Botones de categorías
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                scrollToCategory(category);
+
+                // Actualizar estado activo
+                categoryBtns.forEach(b => b.classList.remove('text-blue-600', 'border-blue-600'));
+                btn.classList.add('text-blue-600', 'border-blue-600');
+            });
+        });        // Botones agregar al carrito
+        addToCartBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const name = btn.dataset.name;
+                const price = btn.dataset.price;
+                const translation = translations[currentLanguage];
+                const isPremium = btn.closest('.menu-item').classList.contains('premium');
+
+                // Verificar si ya está en el carrito
+                const existingIndex = cart.findIndex(item => item.name === name);
+
+                if (existingIndex !== -1) {
+                    // Si ya existe, removerlo
+                    removeFromCart(existingIndex);
+                    btn.textContent = translation['select-btn'];
+                    btn.classList.remove('bg-orange-500', 'bg-orange-600');
+                    btn.classList.add('bg-green-600');
+                } else {
+                    // Si no existe, agregarlo
+                    addToCart(name, price);
+                    btn.textContent = translation['selected-btn'];
+                    btn.classList.remove('bg-green-600', 'bg-green-700');
+                    btn.classList.add('bg-orange-500');
+
+                    // Si es premium, agregar efectos especiales
+                    if (isPremium) {
+                        const menuItem = btn.closest('.menu-item.premium');
+                        createPremiumCelebration(menuItem, btn);
+
+                        // Cambiar texto temporalmente
+                        setTimeout(() => {
+                            btn.textContent = '👑 ¡SELECCIONADO!';
+                            btn.classList.add('premium-button-glow');
+
+                            setTimeout(() => {
+                                btn.textContent = translation['selected-btn'];
+                                btn.classList.remove('premium-button-glow');
+                            }, 2000);
+                        }, 100);
+                    }
+                }
+            });
+        });// Función para restaurar vista normal
+        function restoreNormalView() {
+            const translation = translations[currentLanguage];
+
+            cartContent.classList.remove('vendor-view');
+            cartContent.querySelector('h3').textContent = translation['cart-title'];
+            cartContent.querySelector('.text-xs').textContent = translation['cart-subtitle'];
+
+            // Mostrar botones de eliminar
+            const deleteButtons = cartContent.querySelectorAll('button[onclick*="removeFromCart"]');
+            deleteButtons.forEach(btn => btn.style.display = 'block');
+
+            // Restaurar botones
+            orderBtn.textContent = translation['show-vendor-btn'];
+            orderBtn.className = 'bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed';
+            clearBtn.style.display = 'block';
+
+            // Restaurar tamaño
+            cartContent.style.maxHeight = '';
+            cartContent.style.height = '';
+
+            updateCartDisplay();
+        }        // Inicialización
+        updateCartDisplay();
+        loadSavedLanguage();        // Marcar primera categoría como activa
+        if (categoryBtns.length > 0) {
+            categoryBtns[0].classList.add('text-blue-600', 'border-blue-600');
+        }
+
+        // Service Worker para cache offline (opcional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(() => console.log('SW registrado'))
+                    .catch(() => console.log('SW falló'));
+            });
+        }
+    </script>
+</body>
+
+</html>
