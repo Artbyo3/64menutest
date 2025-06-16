@@ -1,0 +1,165 @@
+{
+  "categories": {
+    "helados": {
+      "icon": "🍧",
+      "items": [
+        {
+          "id": 1,
+          "name": "Helado de Coco",
+          "description": "Cremoso helado de coco natural con trozos de coco fresco",
+          "price": 5.99,
+          "emoji": "🥥",
+          "image": "images/menu/helado-coco.jpg",
+          "available": true,
+          "type": "simple"
+        },
+        {
+          "id": 2,
+          "name": "Helado de Parcha",
+          "description": "Refrescante helado de maracuyá con sabor tropical intenso",
+          "price": 6.49,
+          "emoji": "🟡",
+          "image": "images/menu/helado-parcha.jpg",
+          "available": true,
+          "type": "simple"
+        },
+        {
+          "id": 3,
+          "name": "Helado de Piña",
+          "description": "Delicioso helado de piña natural con trozos de fruta",
+          "price": 5.99,
+          "emoji": "🍍",
+          "image": "images/menu/helado-pina.jpg",
+          "available": true,
+          "type": "simple"
+        }
+      ]
+    },
+    "especiales": {
+      "icon": "🍹",
+      "items": [
+        {
+          "id": 5,
+          "name": "Piña Colada Premium",
+          "description": "Exquisita piña colada preparada con ron premium, crema de coco artesanal y piña fresca",
+          "price": 12.99,
+          "emoji": "🍹",
+          "image": "images/menu/pina-colada.jpg",
+          "available": true,
+          "type": "premium",
+          "details": {
+            "fullDescription": "Nuestra exclusiva Piña Colada Premium preparada con ron añejado de primera calidad, crema de coco artesanal, piña dorada fresca y hielo frappe. Decorada con sombrilla tropical y rodaja de piña fresca.",
+            "ingredients": "Ron premium, crema de coco artesanal, piña fresca, hielo, decoración tropical",
+            "images": [
+              {
+                "emoji": "🍹",
+                "label": "Piña Colada Premium",
+                "image": "images/menu/pina-colada.jpg"
+              },
+              { "emoji": "🍍", "label": "Piña fresca" }
+            ],
+            "imageCaption": "Piña Colada Premium + Piña fresca",
+            "infoTitle": "🏆 Bebida Premium del Chef",
+            "foodInfo": {
+              "premium": {
+                "icon": "👑",
+                "text": "Premium",
+                "subtitle": "Ron añejado",
+                "color": "purple"
+              },
+              "time": {
+                "icon": "⏱️",
+                "text": "5min",
+                "subtitle": "Preparación",
+                "color": "orange"
+              },
+              "tropical": {
+                "icon": "🌺",
+                "text": "Tropical",
+                "subtitle": "Sabor caribeño",
+                "color": "pink"
+              }
+            },
+            "specialNote": "🏖️ Bebida ganadora - Mejor Piña Colada 2024"
+          }
+        }
+      ]
+    },
+    "para-tomar": {
+      "icon": "🥤",
+      "items": [
+        {
+          "id": 4,
+          "name": "Agua de Coco",
+          "description": "Agua de coco fresca directo del coco verde",
+          "price": 7.0,
+          "emoji": "🥥",
+          "image": "images/menu/coco-agua.png",
+          "available": true,
+          "type": "expandable",
+          "details": {
+            "fullDescription": "Agua de coco 100% natural extraída directamente de cocos verdes frescos. Bebida hidratante natural rica en electrolitos y minerales. Servida fría en el mismo coco con pajita.",
+            "ingredients": "Agua de coco 100% natural",
+            "images": [
+              { "emoji": "🥥", "label": "Coco fresco" },
+              { "emoji": "💧", "label": "Agua natural" }
+            ],
+            "imageCaption": "Coco fresco + Agua natural",
+            "infoTitle": "🌴 Bebida natural",
+            "foodInfo": {
+              "natural": {
+                "icon": "🌱",
+                "text": "100% Natural",
+                "subtitle": "Sin aditivos",
+                "color": "green"
+              },
+              "time": {
+                "icon": "⏱️",
+                "text": "Inmediato",
+                "subtitle": "Listo ya",
+                "color": "blue"
+              },
+              "health": {
+                "icon": "💪",
+                "text": "Hidratante",
+                "subtitle": "Saludable",
+                "color": "emerald"
+              }
+            },
+            "specialNote": "🥥 Directo del coco verde"
+          }
+        },
+        {
+          "id": 6,
+          "name": "Agua Embotellada",
+          "description": "Agua natural purificada 500ml",
+          "price": 2.0,
+          "emoji": "💧",
+          "image": "images/menu/agua-embotellada.png",
+          "available": true,
+          "type": "simple"
+        },
+        {
+          "id": 7,
+          "name": "Refresco de Pepsi",
+          "description": "Bebida gaseosa sabor cola 355ml",
+          "price": 2.0,
+          "emoji": "🥤",
+          "image": "images/menu/pepsi-cola.png",
+          "available": true,
+          "type": "simple"
+        },
+        {
+          "id": 9,
+          "name": "Refresco de Coca Cola",
+          "description": "Bebida gaseosa sabor cola 355ml",
+          "price": 2.0,
+          "emoji": "🥤",
+          "image": "images/menu/coca-cola.png",
+          "available": true,
+          "type": "simple"
+        }
+      ]
+    }
+  }
+}
